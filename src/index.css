@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Carlgine:wght@800&display=swap');
+@font-face {
+    font-family: 'CarlGine';
+    src: url('/carlgine-semibold-600.otf') format('opentype'); /* Path relative to public */
+    font-weight: 600; /* Adjust weight based on the font file */
+    font-style: normal; /* Use 'italic' if the font is italic */
+}
+@font-face {
+    font-family: 'italic';
+    src: url('/carlgine-bold-italic-700.otf') format('opentype');
+    font-weight: 700; /* Bold */
+    font-style: italic; /* Italic style */
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.group-class {
+    position: relative;
+    display: inline-block; /* Ensure the link takes only the width of the text */
+    overflow: hidden; /* Ensure the content doesn't overflow */
+  }
+  
+  .group-class::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px; /* Change this value for thicker or thinner underline */
+    background-color: white; /* Change this to your preferred color */
+    width: 100%; /* Full width for the underline */
+    transform: scaleX(0); /* Start from 0 scale */
+    transform-origin: left; /* Scale from the left */
+    transition: transform 0.3s ease; /* Smooth transition */
+    mix-blend-mode: difference;
+  }
+  
+  .group-class:hover::after {
+    transform: scaleX(1); /* Scale to full width on hover */
+  }
+  .custom-underline {
+    position: relative;
+    display: inline-block; /* Ensures the underline only spans the text */
+    overflow: hidden; /* Prevents overflow */
+  }
+  
+  .custom-underline::after {
+    content: "";
+    position: absolute;
+    margin-top: 12px;
+    left: 0;
+    bottom: 0;
+    mix-blend-mode: difference;
+    height: 2px; /* Thickness of the underline */
+    background-color: white; /* Color of the underline */
+    width: 100%; /* Full width for the underline */
+    transform: scaleX(1); /* Always fully visible */
+    transform-origin: left; /* Makes the underline appear from the left */
+    mix-blend-mode: difference;
+  }
+  .custom-underline-mail {
+    position: relative;
+    overflow: hidden;
+}
+
+.custom-underline-mail .underline {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    mix-blend-mode: difference;
+    height: 3px; /* Thickness of the underline */
+    background-color: white; /* Color of the underline */
+    width: 100%; /* Full width for the underline */
+    transform: scaleX(1); /* Always fully visible */
+    transition: transform 0.3s ease-out; /* Animation for underline */
+}
+
+.custom-underline-mail:hover .underline {
+    transform: scaleX(0); /* Scale to 0 for disappearance */
+    transform-origin: right; /* Origin for scaling */
+}
+
+
+
+.custom-underline-mail:hover span {
+    transition: transform 0.3s ease-out; /* Smooth transition */
+    transform: translateX(-40px); /* Adjust to move text */
+}
+
+.arrow-left {
+    opacity: 1;
+    transform: scale(1); /* Default size */
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+/* Right Arrow (Hidden by Default, Grows on Hover) */
+.arrow-right {
+    opacity: 0;
+    transform: scale(0); /* Initially hidden and small */
+    position: absolute;
+    right: -5px; /* Adjust based on email length */
+    top: 0;
+    transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+}
+
+/* Hover Effects */
+.custom-underline-mail:hover .arrow-left {
+    transform: scale(0); /* Shrinks to disappear */
+    opacity: 0;
+}
+
+.custom-underline-mail:hover .arrow-right {
+    opacity: 1;
+    transform: scale(1); /* Grows to full size */
+}
+
+/* Exit Animation for Right Arrow */
+
+
+.custom-underline-mail:not(:hover) .arrow-right {
+    transform: scale(0) translateY(-10px); /* Moves farther up for a smooth disappearance */
+    opacity: 0;
+    transition: transform 0.4s ease-in-out, opacity 0.3s ease-in-out;
+}
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes scroll-right {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 15s linear infinite;
+}
+
+.animate-scroll-right {
+  animation: scroll-right 15s linear infinite;
+}
+
+/*.tool-info {
+  position: relative;  Allows absolute positioning of the paragraph inside 
+  overflow: hidden;  Ensures content stays within the div 
+  border-radius: 10px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.tool-info p {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 0; /* Position the paragraph at the top of the div 
+  left: 0;
+  right: 0;
+  padding: 16px; /* Adjust padding as needed for spacing 
+  background-color: black; /* Background for contrast 
+  color: #B7B7B7;
+  transform: translateY(20px); /* Start slightly below
+  transition: opacity 0.3s ease-in-out, transform 0.6s ease-in-out;
+}
+
+.tool-info:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  cursor: pointer;
+  background-color: black; /* Darken background on hover 
+}
+
+.tool-info:hover img {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.tool-info:hover p {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0); /* Slide the paragraph up to its original position 
+}
+*/
+
+/* Add basic styles for the tool-info divs */
+.tool-container {
+  overflow: visible; /* Ensure no clipping */
+}
+
+.tool-info {
+   transition: filter 0.3s ease, transform 0.3s ease;
+  background-color: transparent;
+  cursor: pointer; /* Ensure pointer cursor is visible */
+  z-index: 1; /* Ensure it is above other elements */
+}
+
+/* When hovering on one div, remove the blur effect on it */
+.tool-info:hover {
+  filter: none;
+  transform: scale(1.02); /* Optional: add scaling effect on hover */
+}
+
+/* Apply blur effect on all sibling elements when one is hovered */
+.tool-container:hover .tool-info:not(:hover) {
+  filter: blur(2px);
+  transform: scale(1); /* Ensure siblings are not scaled */
+}
+
+
+.project-info {
+  position: relative;
+  z-index: 1; /* Ensure this is above the grain effect */
+}
+
+/* .preview{
+  position:absolute;
+  width: 250px;
+  height: 250px;
+  overflow: hidden;
+  pointer-events: none;
+  transform-origin: center;
+  transform: scale(0);
+  
+} */
+
+.preview-img{
+  width:200px;
+  height: 225px;
+}
