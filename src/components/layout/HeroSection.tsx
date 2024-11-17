@@ -21,7 +21,7 @@ const HeroSection = () => {
   }, []);
  
   return (
-    <section className="grid grid-cols-2 gap-[5rem] h-[672px]  ">
+    <section className="grid grid-cols-2 gap-[5rem] h-[672px]">
           <div className="flex justify-center text-[14px] ">
             <div className="flex flex-col justify-center gap-[45px] mb-[120px] ml-[120px]">
               <div>

@@ -11,13 +11,14 @@ const Home = () => {
   return (
     <div className="flex justify-center"> {/* Add overflow-x-hidden here */}
       <div className="mt-[150px] w-[1128px]">
+      
         <HeroSection />
         <About />
         <SelectedWorks/>
         <ReactOut/>
       </div>
     </div>
-
+    
   )
 }
 

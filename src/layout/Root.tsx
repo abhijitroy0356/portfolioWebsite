@@ -1,8 +1,5 @@
 import { useEffect } from "react";
-import Appheader from "../components/layout/Appheader";
-import AppFooter from "../components/layout/AppFooter";
-import { Outlet } from "react-router-dom";
-
+import AppLoader from "../components/layout/AppLoader";
 const Root = () => {
   useEffect(() => {
     const loadGrainedScript = () => {
@@ -34,9 +31,7 @@ const Root = () => {
 
   return (
     <div className="bg-backgroundColor" id="grain">
-      <Appheader />
-      <Outlet />
-      <AppFooter />
+      <AppLoader/>
     </div>
   );
 };

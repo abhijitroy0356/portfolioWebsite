@@ -15,7 +15,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+*{
+  margin: 0;
+  padding: 0;
+}
 .group-class {
     position: relative;
     display: inline-block; /* Ensure the link takes only the width of the text */
@@ -57,7 +60,6 @@
     width: 100%; /* Full width for the underline */
     transform: scaleX(1); /* Always fully visible */
     transform-origin: left; /* Makes the underline appear from the left */
-    mix-blend-mode: difference;
   }
   .custom-underline-mail {
     position: relative;
@@ -197,9 +199,8 @@
 
 .tool-info {
    transition: filter 0.3s ease, transform 0.3s ease;
-  background-color: transparent;
   cursor: pointer; /* Ensure pointer cursor is visible */
-  z-index: 1; /* Ensure it is above other elements */
+  z-index: 1;
 }
 
 /* When hovering on one div, remove the blur effect on it */
@@ -216,22 +217,50 @@
 
 
 .project-info {
-  position: relative;
-  z-index: 1; /* Ensure this is above the grain effect */
+  /* position: relative; */
+  /* z-index: 1; Ensure this is above the grain effect */
 }
 
-/* .preview{
-  position:absolute;
-  width: 250px;
-  height: 250px;
-  overflow: hidden;
-  pointer-events: none;
-  transform-origin: center;
-  transform: scale(0);
-  
-} */
-
-.preview-img{
-  width:200px;
-  height: 225px;
+.overlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2; /* Ensure the overlay is above everything else initially */
+  display: flex;
 }
+
+
+.overlay.hidden {
+  opacity: 0; /* Fade out effect */
+  visibility: hidden; /* Hide overlay visually */
+  z-index: -1; /* Ensure overlay is below other content after it fades */
+}
+
+.overlay.loading {
+  pointer-events: none; /* Prevent interaction during the animation */
+}
+/* .overlay.loading {
+  pointer-events: none; /* Prevent interactions during the animation */
+
+
+.bar {
+  width: 10vw;
+  height: 105vh;
+  background-color: rgb(51, 51, 51);
+}
+
+.counter {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  font-size: 18rem;
+  color: rgb(174, 174, 174);
+  font-weight: bold;
+  z-index: 3; 
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 0.02em;
+}
+
+

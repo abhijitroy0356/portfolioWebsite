@@ -1,15 +1,15 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, MouseEvent } from 'react';
 import { motion, useSpring } from 'framer-motion';
 
 const SelectedWorks = () => {
-    const element = useRef(null);
+    const element = useRef<HTMLDivElement | null>(null);
     const characters = "Selected".split("");
     const characters2 = "Works".split("");
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-    const [img, setImg] = useState({
-        src: "",
-        alt: "",
-    });
+    const [img, setImg]=useState({
+        src:"",
+        opacity:0
+    })
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -25,53 +25,55 @@ const SelectedWorks = () => {
         hidden: { opacity: 0, x: 30 },
         visible: { opacity: 1, x: 0, transition: { duration: 0.8 } },
     };
-
+    const spring = {
+        stiffness:150,
+        damping:15,
+        mass:0.1
+    }
+    const imagePos ={
+        x:useSpring(0, spring),
+        y:useSpring(0,spring)
+    }
+    const handleMove = (e: MouseEvent<HTMLDivElement>) => {
+        const { clientX, clientY } = e;
+        const boundingRect = element.current?.getBoundingClientRect();
+    
+        if (boundingRect) {
+            const offsetX = clientX - boundingRect.left;
+            const offsetY = clientY - boundingRect.top;
+    
+            imagePos.x.set(offsetX-100); // Center the image horizontally
+            imagePos.y.set(offsetY-100); // Center the image vertically
+        }
+    };
     const projects = [
         {
             title: "Project Name 1",
             description: "Creative Direction/Visual/Storytelling",
-            image: "/image1.png",
+            img:'/image1.png'
         },
         {
             title: "Project Name 2",
             description: "Creative Direction/Visual/Storytelling",
-            image: "/image2.png",
+            img:'/image2.png'
         },
         {
             title: "Project Name 3",
             description: "Creative Direction/Visual/Storytelling",
-            image: "/image3.png",
+            img:'/image3.png'
         },
         {
             title: "Project Name 4",
             description: "Creative Direction/Visual/Storytelling",
-            image: "/image4.png",
+            img:'/image4.png'
         },
         {
             title: "Project Name 5",
             description: "Creative Direction/Visual/Storytelling",
-            image: "/image5.png",
+            img:'/image5.png'
         },
     ];
 
-    const springConfig = {
-        stiffness: 150,
-        damping: 50,
-        mass: 0.1,
-    };
-
-    const imagePos = {
-        x: useSpring(0, springConfig),
-        y: useSpring(0, springConfig),
-    };
-
-    const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        imagePos.x.set(e.clientX);
-        imagePos.y.set(e.clientY);
-    };
-
-
-    
     return (
         <section className="flex flex-col mt-[246px] gap-[96px]">
             <div className="flex justify-end font-special text-[96px]">
@@ -109,49 +111,49 @@ const SelectedWorks = () => {
                 ref={element}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.3 }}
+                transition={{ duration: 1, delay: 0.5 }}
                 viewport={{ once: true }}
-                onMouseMove={handleMove} // Track mouse movement within this container
             >
-                <div className="flex flex-col tool-container">
+                <div className='absolute' style={{
+                }}>
+                <motion.img 
+                    src={img.src}
+                    // alt={img.ak}
+                    className='h-[200px] w-[200px] transition-opacity  duration-500 ease-in-out'
+                    style={{
+                        y:imagePos.y,
+                        x: imagePos.x,
+                        opacity:img.opacity,
+                    }}
+                    />
+                        
+                </div>
+               
+                <div className="flex flex-col tool-container" onMouseMove={handleMove}>
+                
+                    
+                  
                     {projects.map((project, index) => (
+                        
                         <div
                             key={index}
                             className="flex flex-col h-[128px] items-center cursor-pointer transition-all duration-900 group project-info box-border relative tool-info"
-                            onMouseEnter={() => {
-                                setHoveredIndex(index);
+                            onMouseEnter={() =>{
+                                setHoveredIndex(index)
                                 setImg({
-                                    src: project.image,
-                                    alt: project.title,
-                                });
+                                    src:project.img,
+                                    opacity:1
+                                })
                             }}
                             onMouseLeave={() => {
-                                setHoveredIndex(null);
+                                setHoveredIndex(null)
                                 setImg({
-                                    src: "",
-                                    alt: "",
-                                });
+                                    src:project.img,
+                                    opacity:0
+                                })
                             }}
                         >
-                            {/* Render image at cursor position */}
-                            {img.src && hoveredIndex === index && (
-    <motion.img
-        src={img.src}
-        alt={img.alt}
-        className="absolute pointer-events-none preview-img"
-        style={{
-            x: imagePos.x,
-            y: imagePos.y,
-            left: `${imagePos.x.get() - 900}px`, // Use .get() to access the value
-            top: `${imagePos.y.get() - 450}px`,  // Use .get() to access the value
-            opacity: 1,
-        }}
-        transition={{ duration: 0.3 }}
-    />
-)}
-
-
-
+                    
                             <div className="flex items-center w-full p-4 project-Info">
                                 <div
                                     className={`absolute bottom-0 left-0 w-full transition-all duration-300 bg-black mb-5 ${
@@ -178,14 +180,16 @@ const SelectedWorks = () => {
                                     <img
                                         src="/Arrow.svg"
                                         alt=""
-                                        className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-all duration-900 transform scale-0 group-hover:scale-100 group-hover:h-[40px] group-hover:w-[40px]"
+                                        className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-all duration-900 transform scale-0"
                                     />
                                 </div>
                             </div>
                         </div>
                     ))}
                 </div>
+               
             </motion.div>
+           
         </section>
     );
 };
